@@ -6,16 +6,10 @@ import os
 from setuptools import setup, find_packages
 from ozoneai import __version__ as version
 
-__this__="ozonetel-ai"
-__src__ = os.path.join(os.getcwd(),'src/')
-
-srcs=[]
-scripts=[]
-
-install_requires=[]
-with open('requirements.txt','r') as fp:
-    install_requires = [d.strip() for d in fp.readlines()]
-    fp.close()
+install_requires=[
+    "requests",
+    "numpy"
+]
 
 package_name = "ozonetel-ai"
 setup(
@@ -24,10 +18,15 @@ setup(
     author = "Biswajit Satapathy",
     author_email = "biswajit@ozonetel.com",
     description = ("The Ozonetel AI Library is a powerful tool developed by Ozonetel Communications Pvt Ltd, designed to empower developers with state-of-the-art Artificial Intelligence capabilities. This library provides seamless integration of advanced AI models into your projects, allowing you to leverage the latest in AI technology to enhance your applications."),
-    license = ("Ozonetel"),
+    license = ("MIT License"),
     keywords = "Machine Learning, Artificial Intellegence, Neural Network, Indexing, Searching",
     url = "",
     packages = ["ozoneai"],
+    classifiers=[
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+    ],
     python_version = ">=3.8",
     install_requires = install_requires
 )
