@@ -38,10 +38,10 @@ To get started with the Ozonetel AI project, follow the steps below:
     embedding_bits = embedding.bits
     
     # Get unsigned binary
-    embedding_ubin = embedding.ubinary
+    embedding_ubin = embedding.ubinary()
     
     # Get signed binary
-    embedding_bin = embedding.binary
+    embedding_bin = embedding.binary()
     ```
 
 
