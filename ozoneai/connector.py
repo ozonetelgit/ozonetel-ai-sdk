@@ -9,7 +9,8 @@ from .exception import AuthenticationError
 class EmbeddingEndpoints:
     baseurl = "https://speech-kws.ozonetel.com"
     root = urljoin(baseurl, "embeddings/")
-    get_embedding = urljoin(root, "text/get_embeddings/")
+    get_embedding = urljoin(root, "text/embedding/get/")
+    quantize = urljoin(root, "text/embedding/quantize/")
     url_details = parse_url(baseurl)
     max_retries = 3
     backoff_factor = 0.3

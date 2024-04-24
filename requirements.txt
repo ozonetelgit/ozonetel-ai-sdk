@@ -1,2 +1,5 @@
 requests
 numpy
+torch
+transformers
+sentence_transformers
