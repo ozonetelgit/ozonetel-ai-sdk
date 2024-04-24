@@ -6,6 +6,11 @@ import os
 from setuptools import setup, find_packages
 from ozoneai import __version__ as version
 
+# read the contents of your README file
+from pathlib import Path
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
+
 install_requires=[
     "requests",
     "numpy"
@@ -28,5 +33,7 @@ setup(
         'Programming Language :: Python :: 3.10',
     ],
     python_version = ">=3.8",
-    install_requires = install_requires
+    install_requires = install_requires,
+    long_description=long_description,
+    long_description_content_type='text/markdown'
 )
