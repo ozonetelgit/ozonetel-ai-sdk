@@ -54,7 +54,7 @@ To get started with the Ozonetel AI project, follow the steps below:
 
 ## Examples
 
-- [search and index]()
+- [search and index](https://github.com/ozonetelgit/ozonetel-ai-sdk/blob/7d693eb3f012b62ec2bcda6758cc5a4e4d18fae7/examples/search-index/Text%20Indexing%20using%20OzoneAI%20Embeddings%20Faiss.ipynb)
 
 ## License
 The Ozonetel AI project is licensed under the MIT License. Please refer to the LICENSE file for more information.
