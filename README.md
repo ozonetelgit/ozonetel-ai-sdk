@@ -3,7 +3,7 @@
 The Ozonetel AI project is designed to provide a user-friendly interface for software development using Ozonetel's in-house AI libraries, models, and software solutions. It offers seamless integration with Ozonetel's advanced AI capabilities, allowing developers to harness the power of AI to enhance their applications.
 
 ## Features
-- Text Embedding (Bit Embeddings): The Ozonetel AI project currently offers text embedding functionality, allowing users to convert text into high-dimensional bit vectors for various natural language processing tasks.
+- Text Embedding (Binary Embeddings): The Ozonetel AI project currently offers text embedding functionality, allowing users to convert text into high-dimensional bit vectors for various natural language processing tasks.
 
 ## Getting Started
 To get started with the Ozonetel AI project, follow the steps below:
@@ -26,11 +26,13 @@ To get started with the Ozonetel AI project, follow the steps below:
     from ozoneai.embeder import QuantizeSentenceEmbedding
     
     # Extract Embeddings: Use the `quantize` method to obtain quantised embeddings for given texts .
+    # Supported models encoders are `sentence-transformers/paraphrase-multilingual-mpnet-base-v2` and `BAAI/bge-m3`
+    # Alternatively if you have stored these models in local directory you can use like `/path/to/paraphrase-multilingual-mpnet-base-v2` or `/path/to/bge-m3`
     with QuantizeSentenceEmbedding(
-        endcoder_modelid="sentence-transformers/paraphrase-multilingual-mpnet-base-v2") as embeder:
+        endcoder_modelid="BAAI/bge-m3") as embeder:
 
         emb = embeder.encode(["Try me Out"])
-        emb_quantised = embeder.quantize(emb, model="siv-sentence-bitnet-pmbv2-wikid-large") # max limit 20 vectors per request
+        emb_quantised = embeder.quantize(emb, model="sieve-bge-m3-en-aug-v1") # max limit 20 vectors per request
     
     # Access Embedding Attributes: Retrieve various attributes of the embedding object, such as bits, unsigned binary, and signed binary.
     
@@ -44,6 +46,12 @@ To get started with the Ozonetel AI project, follow the steps below:
     embedding_bin = emb_quantised.binary()
     ```
 
+    If you want to check available embeddings you can do it as follows
+    ```python
+    from ozoneai.embeder import list_models
+
+    list_models()
+    ```
 
 
 ## License

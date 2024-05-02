@@ -6,6 +6,14 @@ from .models import EmbeddingModels
 from .exception import LimitError
 from sentence_transformers import SentenceTransformer
 
+
+def list_models():
+    for endcoder_modelid, modelids in EmbeddingModels.encoders_model_map.items():
+        print(f"""endcoder_modelid: {endcoder_modelid}, model(s):""")
+        for modelid in modelids:
+            print(f"""\t{modelid}""")
+        print("\n")
+
 class Embeddings(object):
     def __init__(self, model) -> None:
         self.name = model
@@ -117,7 +125,7 @@ class TextEmbedding(object):
     
 class QuantizeEmbedding(object):
     """Ozone Embedder Client Application"""
-    def __init__(self, endcoder_modelid:str = "paraphrase-multilingual-mpnet-base-v2") -> None:
+    def __init__(self, endcoder_modelid:str = "sieve-bge-m3-en-aug-v1") -> None:
         super(QuantizeEmbedding, self).__init__()
         self.connector = EmbeddingConnector()
         self.models = EmbeddingModels.models
@@ -181,6 +189,7 @@ class QuantizeSentenceEmbedding(object):
         self.connector = EmbeddingConnector()
         self.models = EmbeddingModels.models
         self.allowed_encoders = EmbeddingModels.encoders
+        self.model_maps = EmbeddingModels
         
         self.encoder_name = os.path.basename(endcoder_modelid.rstrip("/"))
         
@@ -224,8 +233,8 @@ class QuantizeSentenceEmbedding(object):
         embedding: text embeddings [ no_of_tokens * embeddings_dim ]
         model: {"or, ".join(self.models)}
         """
-        if not model in self.models:
-            raise ValueError("invalid model input!\nselect one from {self.models}")
+        if not model in self.model_maps.encoders_model_map[self.encoder_name]:
+            raise ValueError(f"invalid model input!\n {model} is not type of {self.encoder_name}")
         
         if len(embedding.shape) == 1:
             embedding = np.array([embedding])
