@@ -1,0 +1,108 @@
+Hey there, fellow explorers of the digital frontier! Today, I want to share a little nugget of wisdom that has been swirling around in my head lately. You know that saying, “Be confident in cutting the grass, but don’t ride the horse without any clarity in vision”? Well, stick with me because I’m about to relate it to the wild world of artificial intelligence (AI) in a way that might surprise you.
+
+Picture this: I’m catching up with my friend over the phone, and we were discussing career motivation when this old saying from my childhood suddenly popped into my head. It got me thinking. In AI, confidence is like your fuel. It’s what drives you forward, propelling you to try new things, experiment, and push the boundaries of what’s possible. It’s like confidently mowing the lawn — you know what you’re doing, and you’re not afraid to tackle the job head-on.
+
+But here’s the kicker: confidence alone isn’t enough. Just like you wouldn’t jump on a horse without knowing where you’re going, diving into AI without a clear vision can lead to disaster. You need to have a roadmap, a sense of where you’re headed and why. That’s your clarity of vision.
+
+Think about it this way: imagine someone confidently mowing the lawn versus someone trying to ride a horse without a clue where they’re headed. One person has a skill they’ve mastered, while the other is taking a big risk without a plan. In the world of AI, without that vision, you might find yourself in over your head, facing challenges you didn’t anticipate.
+
+But here’s the exciting part: there’s a cycle of learning in AI that’s a bit like riding that horse. You see, mastery in AI isn’t something you achieve overnight. It’s about embracing challenges, learning from mistakes, and constantly improving. With each new experience, you gain insights that make you better equipped to tackle the next challenge that comes your way.
+
+So, my fellow adventurers, let’s tie it all together. Confidence in AI is like your fuel — it drives you forward. But without clarity of vision, you might find yourself lost in the wilderness. And yet, through the cycle of learning, you can navigate these challenges, growing and improving every step of the way.
+
+Summarizing with Wisdom:
+
+As the great Dr. APJ Abdul Kalam once said:
+
+Learning gives creativity, Creativity leads to thinking, Thinking provides knowledge, And knowledge makes you great.
+
+So, let’s embrace the journey, my friends. Together, let’s harness the power of confidence, vision, and the cycle of learning to unlock the full potential of AI and shape a brighter future for us all.
+
+Thank you … Happy Learning …
+
+In the vast realm of machine learning and artificial intelligence, the landscape can often seem dauntingly complex. Aspiring learners frequently grapple with the question: “Do I need to know all the mathematical modeling details for Large Language Models (LLMs)?” Let’s embark on a journey to understand the layers of learning and unravel the essence of this query.
+
+What, How, Why: The Stages of Learning
+Learning, at its core, can be dissected into three fundamental stages: What, How, and Why.
+
+What:
+
+The initial phase of exploration involves grasping the basics. Much like a child learning the multiplication table, we begin by memorizing without delving into the underlying principles. This stage is about building a foundation, understanding the tools at our disposal.
+
+How:
+
+As we progress, curiosity sparks the quest for understanding. We start questioning the ‘how’ behind the ‘what.’ For instance, realizing that 6 multiplied by 2 is essentially adding 6 five times fosters a deeper comprehension of the process. This phase is marked by an inquisitive drive to uncover the mechanics behind the tools we employ.
+
+Why:
+
+The journey culminates in the realm of ‘why.’ Here, we delve into the underlying rationale and principles. We question the necessity of certain methodologies and seek to unravel the interconnectedness of different concepts. This stage is characterized by profound analysis and critical thinking, where we aim to grasp the essence and purpose behind the tools we utilize.
+
+The Boundless Nature of Learning
+Through this exploration, we come to a profound realization: there are no boundaries to learning. It’s a continuous journey shaped by our aspirations and motivations. Whether we aim to merely utilize existing tools or aspire to master and innovate, the path is ours to chart.
+
+In the realm of machine learning, terms like Neural Networks, RNNs, Attention Mechanisms, Transformers, SVMs, GMMs, HMMs, and more abound. Yet, beneath the surface, they are all functions — tools with specific purposes and functionalities.
+
+Individual Choices in Learning
+The depth of understanding one seeks in mathematical modeling details for LLMs ultimately boils down to individual preferences and goals. If your aim is to utilize LLMs as tools to accomplish specific tasks, a surface-level understanding may suffice. However, for those driven by a passion to master and innovate within the field, delving deeper into the mathematical intricacies becomes imperative.
+
+Conclusion
+In conclusion, the question of whether one needs to know all the mathematical modeling details for LLMs is not a one-size-fits-all query. Rather, it hinges on individual aspirations, motivations, and objectives. Whether you choose to embrace LLMs as tools or delve into the depths of their mathematical underpinnings, remember that the journey of learning is as boundless as your curiosity and ambition.
+
+
+
+Imagine you’re playing a treasure hunt game in a city without a map, where every landmark or street sign is hidden. It’d be quite a challenge to find your way around, right? This is similar to how artificial intelligence (AI) feels when trying to understand sentences without a bit of extra help. This help comes in the form of something called “positional embeddings,” which is like giving AI a special map that shows not only the words (or landmarks) but also the order in which they appear in a sentence.
+
+The Magic of Positional Embeddings: Giving Words a Sense of Order
+Think of a sentence as a pearl necklace. Each pearl (word) is beautiful on its own, but the order in which they’re strung together gives the necklace (sentence) its beauty and meaning. Positional embeddings are like tiny invisible tags attached to each pearl, telling the AI the position of each word in the sentence. This helps the AI understand that “The lion chased the mouse” is different from “The mouse chased the lion,” even though both sentences use the same words.
+
+Making It Simpler
+When AI reads a sentence, it doesn’t naturally understand which word comes first, second, or last. Positional embeddings solve this by providing unique signals for each spot in the sentence, almost like assigning each word a specific number that tells the AI its place in line.
+
+The Dance of Words: Introducing Rotary Positional Embeddings
+Now, let’s add a twist to our understanding. Imagine if, instead of just standing in a line, each word could dance around, changing its position and interacting with other words in different ways. This is what rotary positional embeddings (RoPE) do. They allow words to ‘dance’ with each other, showing the AI not just the position but also how words relate and move around in a sentence.
+
+Words in Motion
+This method is like a dance routine for words, where each step and turn is crucial. It helps the AI understand the flow of words, how they connect, and the nuances of their meaning together, much like how dancers interact in a performance to tell a story.
+
+Simplifying the Complex
+Imagine if each word in a sentence had a little compass attached to it, showing not only where it stands but also how it’s connected to the next word. RoPE does something similar; it gives AI this compass, helping it see the full picture of how words work together in a sentence, making the meaning clearer.
+
+Why All This Matters
+The journey of understanding language is like navigating a vast ocean. The better the tools we give our AI ‘ships,’ the better they can sail these waters, understanding not just words but the rich, complex meanings behind them. These embeddings are like advanced navigation systems, guiding AI through the intricacies of human language, enabling it to grasp subtleties, detect nuances, and even appreciate the beauty of our communication.
+
+Looking Ahead: The Future of AI and Language
+As we move forward, these tools are transforming AI from simple machines into intelligent entities that can understand, interact, and respond to human language in ways we never thought possible. It’s a journey from seeing words as just a string of letters to understanding them as carriers of ideas, emotions, and connections, bridging the gap between human intelligence and artificial understanding.
+
+Simplified Mathematical modeling behind Positional Embeddings and Rotary Positional Embeddings
+Let’s break down positional embeddings, rotary positional embeddings, and their advantages over traditional positional embeddings in layman’s terms, along with a simplified explanation of their mathematical expressions.
+
+Positional Embeddings
+Imagine you have a string of beads, each bead representing a word in a sentence. Just like each bead’s position in the string is crucial to understanding the pattern, each word’s position in a sentence is vital for understanding its meaning. However, unlike beads on a string, words in a sentence don’t inherently carry their position information. Positional embeddings are like tiny tags attached to each bead (word) that tell you where they are located on the string (sentence).
+
+In technical terms, positional embeddings are vectors added to the word embeddings in transformer models. These vectors follow a specific pattern (often a mix of sine and cosine functions) that changes with the position in the sequence, thereby giving the model a way to understand the order of words.
+
+Mathematical Expression:
+
+For a position pos and a dimension i, the positional encoding is defined as:
+
+
+Here, pos is the position in the sequence, i is the dimension, and dmodel​ is the model’s dimension. The use of sine and cosine ensures that the encoding varies smoothly and cyclically with position.
+
+Rotary Positional Embeddings (RoPE)
+Now, think of the beads (words) not just placed on a string but also capable of rotating around their positions, adding another layer of interaction based on their angles. The rotary positional embeddings work similarly by providing a rotational aspect to the positional information, considering the relative positions of words to each other rather than their absolute position in the sequence.
+
+Mathematical Expression:
+
+RoPE integrates the position encoding into the attention mechanism by associating each sequence element with a rotation matrix:
+
+Ri​(x)=x * cos(θi​) + Wθ​ * x * sin(θi​)
+
+where Ri​ is the rotation associated with the i-th position, x is the embedding, θ is the angle of rotation which corresponds to the position encoding, and Wθ​ is a learnable parameter matrix.
+
+Advantages of RoPE over Traditional Positional Embedding
+Relative Positioning: RoPE naturally incorporates the notion of relative positioning, which is crucial for understanding the context and meaning based on the relative distances between words, not just their absolute position in a sentence.
+Sequence Length Flexibility: It adapts to varying sequence lengths without loss of information, making it robust for different contexts and applications.
+Enhanced Interaction: By considering rotations, RoPE allows for a more nuanced interaction between the embeddings, capturing the contextual nuances that arise from the relative positioning of words.
+Efficiency: It can be more computationally efficient and can enhance the model’s ability to generalize from the training data to unseen data by capturing the essence of word order and relationships effectively.
+In essence, while traditional positional embeddings lay the groundwork for models to understand order, rotary positional embeddings take this a step further by embedding the words in a relational context, enhancing the model’s comprehension of text in a way that’s closer to how humans understand language. GPT family uses positional encoding and Llama uses RoPE. In future we will discuss How they utilise the power of both the embedding methods.
+

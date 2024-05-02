@@ -22,17 +22,16 @@ To get started with the Ozonetel AI project, follow the steps below:
 
    Example:
     ```python
-    # Import `QuantizeSentenceEmbedding` class from the `ozoneai.embeder` module.
-    from ozoneai.embeder import QuantizeSentenceEmbedding
+    # Import `QuantizeSentenceEmbedding` class from the `ozoneai.embeddings` module.
+    from ozoneai.embeddings import QuantizeSentenceEmbedding
     
     # Extract Embeddings: Use the `quantize` method to obtain quantised embeddings for given texts .
     # Supported models encoders are `sentence-transformers/paraphrase-multilingual-mpnet-base-v2` and `BAAI/bge-m3`
     # Alternatively if you have stored these models in local directory you can use like `/path/to/paraphrase-multilingual-mpnet-base-v2` or `/path/to/bge-m3`
     with QuantizeSentenceEmbedding(
-        endcoder_modelid="BAAI/bge-m3") as embeder:
-
-        emb = embeder.encode(["Try me Out"])
-        emb_quantised = embeder.quantize(emb, model="sieve-bge-m3-en-aug-v1") # max limit 20 vectors per request
+        endcoder_modelid="BAAI/bge-m3") as embedder:
+        emb = embedder.encode(["Try me Out"])
+        emb_quantised = embedder.quantize(emb, model="sieve-bge-m3-en-aug-v1") # max limit 20 vectors per request
     
     # Access Embedding Attributes: Retrieve various attributes of the embedding object, such as bits, unsigned binary, and signed binary.
     
@@ -48,11 +47,14 @@ To get started with the Ozonetel AI project, follow the steps below:
 
     If you want to check available embeddings you can do it as follows
     ```python
-    from ozoneai.embeder import list_models
+    from ozoneai.embeddings import list_models
 
     list_models()
     ```
 
+## Examples
+
+- [search and index]()
 
 ## License
 The Ozonetel AI project is licensed under the MIT License. Please refer to the LICENSE file for more information.
