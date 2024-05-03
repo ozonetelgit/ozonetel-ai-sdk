@@ -61,11 +61,13 @@ import numpy as np, os
 from ozoneai.embeddings import BinarizeEmbedding
 
 from sentence_transformers import SentenceTransformer
-base_model = SentenceTransformer("BAAI/bge-m3")
 
 # define credentials
 # os.environ["OZAI_API_CREDENTIALS"] = "./cred.json"
 credential = {"username":"", "bearer_token":""}
+
+base_model = SentenceTransformer("BAAI/bge-m3")
+binary_encoder = BinarizeEmbedding(endcoder_modelid="BAAI/bge-m3",credential=credential) 
 
 # Documents to be Indexed
 docs = [
@@ -89,11 +91,7 @@ docs = [
 docs_emb = base_model.encode(docs)
 
 # Binarise embeedings
-with BinarizeSentenceEmbedding(
-    endcoder_modelid="BAAI/bge-m3",
-    credential=credential
-) as encoder:
-    docs_emb_binarized = encoder.binarize(docs_emb, model="sieve-bge-m3-en-aug-v1")
+docs_emb_binarized = binary_encoder.get_binary_embeddings(docs_emb, model="sieve-bge-m3-en-aug-v1")
 
 # Searching
 
@@ -108,11 +106,7 @@ query_text = "I love Artifical Intellegence"
 query_emb = base_model.encode([query_text])
 
 # Binarise embeedings
-with BinarizeEmbedding(
-    endcoder_modelid="BAAI/bge-m3",
-    credential=credential
-) as encoder:    
-    query_emb_binarized = encoder.binarize(query_emb, model="sieve-bge-m3-en-aug-v1")
+query_emb_binarized = binary_encoder.get_binary_embeddings(query_emb, model="sieve-bge-m3-en-aug-v1")
 
 # compute distance of docs from query
 topn = 5
@@ -125,7 +119,6 @@ scores = (1 - (dist/(query_emb_binarized.embedding.shape[1]*8))).round(3)
 # Print search result in order
 for i, doci in enumerate(topn_indices):
     print(f"{i}. {docs[doci]} [{doci}] ({scores[doci]})")
-
 
 ```
     

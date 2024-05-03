@@ -123,7 +123,7 @@ class TextEmbedding(object):
         r = response.json()
         return embeddings.parse(r)
     
-    def get_binary_embedding(self, texts:List[str], model:str):
+    def get_binary_embeddings(self, texts:List[str], model:str):
         f"""
         text: input text
         model: {"or, ".join(self.models)}
