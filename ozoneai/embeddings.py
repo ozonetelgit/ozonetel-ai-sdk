@@ -123,6 +123,43 @@ class TextEmbedding(object):
         r = response.json()
         return embeddings.parse(r)
     
+    def get_binary_embedding(self, texts:List[str], model:str):
+        f"""
+        text: input text
+        model: {"or, ".join(self.models)}
+        """
+        self.connect()
+        try:        
+            if len(texts) > 20:
+                raise LimitError("max limit (20) exceeded!")
+            
+            if not model in self.models:
+                raise ValueError("invalid model input!\nselect one from {self.models}")
+            
+            headers = {
+                "accept": "application/json",
+                "Authorization": f"Bearer {self.connector.bearer_token}",
+                "Content-Type": "application/json",
+            }
+
+            data = {
+                "texts": texts,
+                "embedder_name": model
+            }
+
+            response = self.connector.connection.post(
+                self.connector.endpoints.get_embedding,
+                headers=headers, 
+                json=data
+            )
+            embeddings = Embeddings(model)
+            r = response.json()
+            return embeddings.parse(r)
+        except Exception as e:
+            raise e
+        finally:
+            self.close()
+
 class BinarizeEmbedding(object):
     """Ozone Embedder Client Application"""
     def __init__(self, endcoder_modelid:str = "sieve-bge-m3-en-aug-v1", credential=None) -> None:
@@ -182,7 +219,44 @@ class BinarizeEmbedding(object):
         )
         embeddings = BinarizedEmbeddings(model)
         return embeddings.parse(response.json())
+    
+    def get_binary_embeddings(self, embedding: np.ndarray, model:str):
+        f"""
+        embedding: text embeddings [ no_of_tokens * embeddings_dim ]
+        model: {"or, ".join(self.models)}
+        """
+        self.connect()
+        try:
+            if not model in self.model_maps.encoders_model_map[self.encoder_name]:
+                raise ValueError(f"invalid model input!\n {model} is not type of {self.encoder_name}")
+            
+            if len(embedding.shape) == 1:
+                embedding = np.array([embedding])
+            
+            headers = {
+                "accept": "application/json",
+                "Authorization": f"Bearer {self.connector.bearer_token}",
+                "Content-Type": "application/json",
+            }
 
+            data = json.dumps({
+                "vectors": embedding.astype(str).tolist(),
+                "embedder_name": model,
+                "base_model": self.encoder_name
+            })
+
+            response = self.connector.connection.post(
+                self.connector.endpoints.binarize,
+                headers=headers, 
+                data=data
+            )
+            embeddings = BinarizedEmbeddings(model)
+            return embeddings.parse(response.json())
+        except Exception as e:
+            raise e
+        finally:
+            self.close()
+            
 class BinarizeSentenceEmbedding(object):
     """Ozone Embedder Client Application"""
     def __init__(self, endcoder_modelid:str ="", device:str ="cpu", credential=None) -> None:
@@ -264,3 +338,46 @@ class BinarizeSentenceEmbedding(object):
         embeddings = BinarizedEmbeddings(model)
         r = response.json()
         return embeddings.parse(r)
+
+    def get_binary_embeddings(self, embedding: np.ndarray, model:str):
+        f"""
+        embedding: text embeddings [ no_of_tokens * embeddings_dim ]
+        model: {"or, ".join(self.models)}
+        """
+        self.connect()
+        try:
+            if not model in self.model_maps.encoders_model_map[self.encoder_name]:
+                raise ValueError(f"invalid model input!\n {model} is not type of {self.encoder_name}")
+            
+            if len(embedding.shape) == 1:
+                embedding = np.array([embedding])
+                
+            if embedding.shape[0] > 20:
+                raise LimitError("max limit (20) exceeded!")
+            
+            headers = {
+                "accept": "application/json",
+                "Authorization": f"Bearer {self.connector.bearer_token}",
+                "Content-Type": "application/json",
+            }
+
+            data = json.dumps({
+                "vectors": embedding.astype(str).tolist(),
+                "embedder_name": model,
+                "base_model": self.encoder_name
+            })
+
+            response = self.connector.connection.post(
+                self.connector.endpoints.binarize,
+                headers=headers, 
+                data=data
+            )
+
+            embeddings = BinarizedEmbeddings(model)
+            r = response.json()
+            return embeddings.parse(r)
+        except Exception as e:
+            raise e
+        finally:
+            self.close()
+        
