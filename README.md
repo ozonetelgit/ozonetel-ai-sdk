@@ -36,13 +36,8 @@ To get started with the Ozonetel AI project, follow the steps below:
     # Access Embedding Attributes: Retrieve various attributes of the embedding object, such as bits, unsigned binary, and signed binary.
     
     # Get bit representation
-    embedding_bits = emb_quantised.bits
-    
-    # Get unsigned binary
-    embedding_ubin = emb_quantised.ubinary()
-    
-    # Get signed binary
-    embedding_bin = emb_quantised.binary()
+    embeddings = emb_quantised.embedding
+
     ```
 
     If you want to check available embeddings you can do it as follows
@@ -52,9 +47,74 @@ To get started with the Ozonetel AI project, follow the steps below:
     list_models()
     ```
 
+
 ## Examples
 
-- [search and index](https://github.com/ozonetelgit/ozonetel-ai-sdk/blob/main/examples/search-index/Text%20Indexing%20using%20OzoneAI%20Embeddings%20Faiss.ipynb)
+### Search And Index:
+
+```python
+
+import numpy as np, os
+from ozoneai.embeddings import QuantizeSentenceEmbedding
+
+# define credentials
+os.environ["OZAI_API_CREDENTIALS"] = "./cred.json"
+
+# Documents to be Indexed
+docs = [
+    "The cat sits outside",
+    "A man is playing guitar",
+    "I love pasta",
+    "The new movie is awesome",
+    "The cat plays in the garden",
+    "A woman watches TV",
+    "The new movie is so great",
+    "Do you like pizza?",
+    "Artifical intelligence is all about enabling computers to simulate human capabilities.",
+    "Artifical intelligence is there to help human",
+    "Language moodel has lot of impact on artifical intelligence",
+    "Artifical intelligence is reigning in industry",
+    "ROI is one the useful measure for any investors",
+    "Understand before you invest"
+]
+
+# Extract Embeddings for documents to be indexed
+with QuantizeSentenceEmbedding(
+    endcoder_modelid="BAAI/bge-m3"
+) as encoder:
+    docs_emb = encoder.encode(docs)
+    docs_emb_quantised = encoder.quantize(docs_emb, model="sieve-bge-m3-en-aug-v1")
+
+# Searching
+
+# query_text = "the girl was sitting in the park"
+query_text = "I love Artifical Intellegence"
+# query_text = "Artifical intellegence helps optimising software"
+# query_text = "what is machine learning"
+
+# Extract Embeddings query
+with QuantizeSentenceEmbedding(
+    endcoder_modelid="BAAI/bge-m3"
+) as encoder:
+    query_emb = encoder.encode([query_text])
+    query_emb_quantised = encoder.quantize(query_emb, model="sieve-bge-m3-en-aug-v1")
+
+# compute distance of docs from query
+topn = 5
+dist_pbit = np.bitwise_xor(docs_emb_quantised.embedding, query_emb_quantised.embedding)
+dist_bit = np.unpackbits(dist_pbit, axis=1)
+dist = np.sum(dist_bit, axis=1)
+topn_indices = np.argsort(dist)[:topn]
+scores = (1 - (dist/(query_emb_quantised.embedding.shape[1]*8))).round(3)
+
+# Print search result in order
+for i, doci in enumerate(topn_indices):
+    print(f"{i}. {docs[doci]} [{doci}] ({scores[doci]})")
+
+
+```
+    
+[try more..](https://github.com/ozonetelgit/ozonetel-ai-sdk/blob/main/examples/search-index/)
 
 ## Benchmarks
 ### Classification
