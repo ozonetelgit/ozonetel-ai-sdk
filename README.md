@@ -21,6 +21,10 @@ To get started with the Ozonetel AI project, follow the steps below:
     import os
     os.environ["OZAI_API_CREDENTIALS"] = "./cred.json"
     ```
+    or,
+    ``` python
+    credential = {"username":"", "bearer_token":""}
+    ```
 3. Text Embedding Extraction
     Text embedding converts textual data into numerical representations, aiding natural language processing tasks. By capturing semantic meaning, it enhances sentiment analysis, document classification, and named entity recognition. Efficient and transferable, embeddings facilitate faster computation and enable machine learning models to better understand and process text. `BinarizeSentenceEmbedding` binarizes base embeddings and represents in bits.
 
@@ -32,10 +36,12 @@ To get started with the Ozonetel AI project, follow the steps below:
     # Extract Embeddings: Use the `binarize` method to obtain binarized embeddings for given texts .
     # Supported models encoders are `sentence-transformers/paraphrase-multilingual-mpnet-base-v2` and `BAAI/bge-m3`
     # Alternatively if you have stored these models in local directory you can use like `/path/to/paraphrase-multilingual-mpnet-base-v2` or `/path/to/bge-m3`
-    with BinarizeSentenceEmbedding(
-        endcoder_modelid="BAAI/bge-m3") as embedder:
-        emb = embedder.encode(["Try me Out"])
-        emb_binarized = embedder.binarize(emb, model="sieve-bge-m3-en-aug-v1") # max limit 20 vectors per request
+    
+    # Note: for safest use `OZAI_API_CREDENTIALS`. In that case `credential` argument can be ignored. if `credential` is not defined `OZAI_API_CREDENTIALS` will be considered.
+    binary_encoder = BinarizeSentenceEmbedding(endcoder_modelid="BAAI/bge-m3", credential = credential)
+
+    emb = binary_encoder.encode(["Try me Out"])
+    emb_binarized = binary_encoder.get_binary_embeddings(emb, model="sieve-bge-m3-en-aug-v1") # max limit 20 vectors per request
     
     # Access Embedding Attributes: Retrieve various attributes of the embedding object, such as bits, unsigned binary, and signed binary.
     # Get binary representation
