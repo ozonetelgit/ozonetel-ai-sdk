@@ -8,7 +8,11 @@ The Ozonetel AI project is designed to provide a user-friendly interface for sof
 ## Getting Started
 To get started with the Ozonetel AI project, follow the steps below:
 
-1. Set Credentials:
+1. Installation
+   ```bash
+   pip install ozonetel-ai
+   ```
+2. Set Credentials:
     Before using the text embedding feature, set your credentials by importing the os module and setting the `OZAI_API_CREDENTIALS` environment variable to point to your credentials file.
     
     Example:
@@ -18,25 +22,24 @@ To get started with the Ozonetel AI project, follow the steps below:
     os.environ["OZAI_API_CREDENTIALS"] = "./cred.json"
     ```
 3. Text Embedding Extraction
-    Text embedding converts textual data into numerical representations, aiding natural language processing tasks. By capturing semantic meaning, it enhances sentiment analysis, document classification, and named entity recognition. Efficient and transferable, embeddings facilitate faster computation and enable machine learning models to better understand and process text. `QuantizeSentenceEmbedding` quantizes base embeddings and represents in bits.
+    Text embedding converts textual data into numerical representations, aiding natural language processing tasks. By capturing semantic meaning, it enhances sentiment analysis, document classification, and named entity recognition. Efficient and transferable, embeddings facilitate faster computation and enable machine learning models to better understand and process text. `BinarizeSentenceEmbedding` binarizes base embeddings and represents in bits.
 
    Example:
     ```python
-    # Import `QuantizeSentenceEmbedding` class from the `ozoneai.embeddings` module.
-    from ozoneai.embeddings import QuantizeSentenceEmbedding
+    # Import `BinarizeSentenceEmbedding` class from the `ozoneai.embeddings` module.
+    from ozoneai.embeddings import BinarizeSentenceEmbedding
     
-    # Extract Embeddings: Use the `quantize` method to obtain quantised embeddings for given texts .
+    # Extract Embeddings: Use the `binarize` method to obtain binarized embeddings for given texts .
     # Supported models encoders are `sentence-transformers/paraphrase-multilingual-mpnet-base-v2` and `BAAI/bge-m3`
     # Alternatively if you have stored these models in local directory you can use like `/path/to/paraphrase-multilingual-mpnet-base-v2` or `/path/to/bge-m3`
-    with QuantizeSentenceEmbedding(
+    with BinarizeSentenceEmbedding(
         endcoder_modelid="BAAI/bge-m3") as embedder:
         emb = embedder.encode(["Try me Out"])
-        emb_quantised = embedder.quantize(emb, model="sieve-bge-m3-en-aug-v1") # max limit 20 vectors per request
+        emb_binarized = embedder.binarize(emb, model="sieve-bge-m3-en-aug-v1") # max limit 20 vectors per request
     
     # Access Embedding Attributes: Retrieve various attributes of the embedding object, such as bits, unsigned binary, and signed binary.
-    
-    # Get bit representation
-    embeddings = emb_quantised.embedding
+    # Get binary representation
+    embeddings = emb_binarized.embedding
 
     ```
 
@@ -55,10 +58,14 @@ To get started with the Ozonetel AI project, follow the steps below:
 ```python
 
 import numpy as np, os
-from ozoneai.embeddings import QuantizeSentenceEmbedding
+from ozoneai.embeddings import BinarizeEmbedding
+
+from sentence_transformers import SentenceTransformer
+base_model = SentenceTransformer("BAAI/bge-m3")
 
 # define credentials
-os.environ["OZAI_API_CREDENTIALS"] = "./cred.json"
+# os.environ["OZAI_API_CREDENTIALS"] = "./cred.json"
+credential = {"username":"", "bearer_token":""}
 
 # Documents to be Indexed
 docs = [
@@ -79,11 +86,14 @@ docs = [
 ]
 
 # Extract Embeddings for documents to be indexed
-with QuantizeSentenceEmbedding(
-    endcoder_modelid="BAAI/bge-m3"
+docs_emb = base_model.encode(docs)
+
+# Binarise embeedings
+with BinarizeSentenceEmbedding(
+    endcoder_modelid="BAAI/bge-m3",
+    credential=credential
 ) as encoder:
-    docs_emb = encoder.encode(docs)
-    docs_emb_quantised = encoder.quantize(docs_emb, model="sieve-bge-m3-en-aug-v1")
+    docs_emb_binarized = encoder.binarize(docs_emb, model="sieve-bge-m3-en-aug-v1")
 
 # Searching
 
@@ -93,19 +103,24 @@ query_text = "I love Artifical Intellegence"
 # query_text = "what is machine learning"
 
 # Extract Embeddings query
-with QuantizeSentenceEmbedding(
-    endcoder_modelid="BAAI/bge-m3"
-) as encoder:
-    query_emb = encoder.encode([query_text])
-    query_emb_quantised = encoder.quantize(query_emb, model="sieve-bge-m3-en-aug-v1")
+
+# Compute sentence embedding using SentenceTransformers (i.e. bge-m3 or paraphrase-multilingual-mpnet-base-v2)
+query_emb = base_model.encode([query_text])
+
+# Binarise embeedings
+with BinarizeEmbedding(
+    endcoder_modelid="BAAI/bge-m3",
+    credential=credential
+) as encoder:    
+    query_emb_binarized = encoder.binarize(query_emb, model="sieve-bge-m3-en-aug-v1")
 
 # compute distance of docs from query
 topn = 5
-dist_pbit = np.bitwise_xor(docs_emb_quantised.embedding, query_emb_quantised.embedding)
+dist_pbit = np.bitwise_xor(docs_emb_binarized.embedding, query_emb_binarized.embedding)
 dist_bit = np.unpackbits(dist_pbit, axis=1)
 dist = np.sum(dist_bit, axis=1)
 topn_indices = np.argsort(dist)[:topn]
-scores = (1 - (dist/(query_emb_quantised.embedding.shape[1]*8))).round(3)
+scores = (1 - (dist/(query_emb_binarized.embedding.shape[1]*8))).round(3)
 
 # Print search result in order
 for i, doci in enumerate(topn_indices):

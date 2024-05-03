@@ -10,7 +10,7 @@ class EmbeddingEndpoints:
     baseurl = "https://speech-kws.ozonetel.com"
     root = urljoin(baseurl, "embeddings/")
     get_embedding = urljoin(root, "text/embedding/get/")
-    quantize = urljoin(root, "text/embedding/quantize/")
+    binarize = urljoin(root, "text/embedding/quantize/")
     url_details = parse_url(baseurl)
     max_retries = 3
     backoff_factor = 0.3
@@ -18,20 +18,22 @@ class EmbeddingEndpoints:
 # Embedder Client
 class EmbeddingConnector(object):
     """Ozone Embedder Client Application"""
-    def __init__(self) -> None:
+    def __init__(self, credential=None) -> None:
         super(EmbeddingConnector, self).__init__()
-        credfile = os.environ.get('OZAI_API_CREDENTIALS')
-        if not credfile:
-            raise AuthenticationError(f"No credentials found!\nexport `OZAI_API_CREDENTIALS` before importing the module.")
-        if not os.path.exists(credfile):
-            raise AuthenticationError(f"Invalid credentials found!\n check if `OZAI_API_CREDENTIALS` valid!")
         
-        with open(credfile) as fp:
-            credential = json.load(fp)
-            if not "username" in credential:
-                raise AuthenticationError(f"`username` missing in credentials!")
-            if not "bearer_token" in credential:
-                raise AuthenticationError(f"`bearer_token` missing in credentials!")
+        if not credential:
+            credfile = os.environ.get('OZAI_API_CREDENTIALS')
+            if not credfile:
+                raise AuthenticationError(f"No credentials found!\nexport `OZAI_API_CREDENTIALS` before importing the module.")
+            if not os.path.exists(credfile):
+                raise AuthenticationError(f"Invalid credentials found!\n check if `OZAI_API_CREDENTIALS` valid!")
+            
+            with open(credfile) as fp:
+                credential = json.load(fp)
+                if not "username" in credential:
+                    raise AuthenticationError(f"`username` missing in credentials!")
+                if not "bearer_token" in credential:
+                    raise AuthenticationError(f"`bearer_token` missing in credentials!")
         
         self.username = credential["username"]
         self.bearer_token = credential["bearer_token"]

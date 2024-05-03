@@ -41,7 +41,7 @@ class Embeddings(object):
     def binary(self):
         return (self.embedding - 128).astype(np.int8)
     
-class QuantizedEmbeddings(object):
+class BinarizedEmbeddings(object):
     def __init__(self, model) -> None:
         self.name = model
         
@@ -71,9 +71,9 @@ class QuantizedEmbeddings(object):
 
 class TextEmbedding(object):
     """Ozone Embedder Client Application"""
-    def __init__(self) -> None:
+    def __init__(self, credential=None) -> None:
         super(TextEmbedding, self).__init__()
-        self.connector = EmbeddingConnector()
+        self.connector = EmbeddingConnector(credential)
         self.models = EmbeddingModels.models
 
     def connect(self):
@@ -123,13 +123,14 @@ class TextEmbedding(object):
         r = response.json()
         return embeddings.parse(r)
     
-class QuantizeEmbedding(object):
+class BinarizeEmbedding(object):
     """Ozone Embedder Client Application"""
-    def __init__(self, endcoder_modelid:str = "sieve-bge-m3-en-aug-v1") -> None:
-        super(QuantizeEmbedding, self).__init__()
-        self.connector = EmbeddingConnector()
+    def __init__(self, endcoder_modelid:str = "sieve-bge-m3-en-aug-v1", credential=None) -> None:
+        super(BinarizeEmbedding, self).__init__()
+        self.connector = EmbeddingConnector(credential)
         self.models = EmbeddingModels.models
         self.allowed_encoders = EmbeddingModels.encoders
+        self.model_maps = EmbeddingModels
         self.encoder_name = os.path.basename(endcoder_modelid.rstrip("/"))
         
         if not self.encoder_name in self.allowed_encoders:
@@ -151,13 +152,13 @@ class QuantizeEmbedding(object):
     def __del__(self):
         self.close()
 
-    def quantize(self, embedding: np.ndarray, model:str):
+    def binarize(self, embedding: np.ndarray, model:str):
         f"""
         embedding: text embeddings [ no_of_tokens * embeddings_dim ]
         model: {"or, ".join(self.models)}
         """
-        if not model in self.models:
-            raise ValueError("invalid model input!\nselect one from {self.models}")
+        if not model in self.model_maps.encoders_model_map[self.encoder_name]:
+            raise ValueError(f"invalid model input!\n {model} is not type of {self.encoder_name}")
         
         if len(embedding.shape) == 1:
             embedding = np.array([embedding])
@@ -175,18 +176,18 @@ class QuantizeEmbedding(object):
         })
 
         response = self.connector.connection.post(
-            self.connector.endpoints.quantize,
+            self.connector.endpoints.binarize,
             headers=headers, 
             data=data
         )
-        embeddings = QuantizedEmbeddings(model)
+        embeddings = BinarizedEmbeddings(model)
         return embeddings.parse(response.json())
 
-class QuantizeSentenceEmbedding(object):
+class BinarizeSentenceEmbedding(object):
     """Ozone Embedder Client Application"""
-    def __init__(self, endcoder_modelid:str ="", device:str ="cpu") -> None:
-        super(QuantizeSentenceEmbedding, self).__init__()
-        self.connector = EmbeddingConnector()
+    def __init__(self, endcoder_modelid:str ="", device:str ="cpu", credential=None) -> None:
+        super(BinarizeSentenceEmbedding, self).__init__()
+        self.connector = EmbeddingConnector(credential)
         self.models = EmbeddingModels.models
         self.allowed_encoders = EmbeddingModels.encoders
         self.model_maps = EmbeddingModels
@@ -228,7 +229,7 @@ class QuantizeSentenceEmbedding(object):
         """
         return self.embedder.encode(texts, batch_size=batch_size, show_progress_bar=verbose)
         
-    def quantize(self, embedding: np.ndarray, model:str):
+    def binarize(self, embedding: np.ndarray, model:str):
         f"""
         embedding: text embeddings [ no_of_tokens * embeddings_dim ]
         model: {"or, ".join(self.models)}
@@ -255,11 +256,11 @@ class QuantizeSentenceEmbedding(object):
         })
 
         response = self.connector.connection.post(
-            self.connector.endpoints.quantize,
+            self.connector.endpoints.binarize,
             headers=headers, 
             data=data
         )
 
-        embeddings = QuantizedEmbeddings(model)
+        embeddings = BinarizedEmbeddings(model)
         r = response.json()
         return embeddings.parse(r)
