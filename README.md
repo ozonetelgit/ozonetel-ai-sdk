@@ -8,11 +8,27 @@ The Ozonetel AI project is designed to provide a user-friendly interface for sof
 ## Getting Started
 To get started with the Ozonetel AI project, follow the steps below:
 
-1. Installation
-   ```bash
-   pip install ozonetel-ai
-   ```
-2. Set Credentials:
+1. Usage
+    1. Installation
+    
+    ```bash
+    pip install ozonetel-ai
+    ```
+
+    2. compute binary embedding 
+
+    ```python
+    from ozoneai.embeddings import BinarizeEmbedding
+    from ozoneai.utils import bit_sim
+
+    from sentence_transformers import SentenceTransformer
+
+    credential = {"username":"", "bearer_token":""}
+
+    model = SentenceTransformer("BAAI/bge-m3")
+    binary_encoder = BinarizeEmbedding(endcoder_modelid="BAAI/bge-m3",credential=credential)
+    ```
+1. Set Credentials:
     Before using the text embedding feature, set your credentials by importing the os module and setting the `OZAI_API_CREDENTIALS` environment variable to point to your credentials file.
     
     Example:
@@ -25,7 +41,7 @@ To get started with the Ozonetel AI project, follow the steps below:
     ``` python
     credential = {"username":"", "bearer_token":""}
     ```
-3. Text Embedding Extraction
+2. Text Embedding Extraction
     Text embedding converts textual data into numerical representations, aiding natural language processing tasks. By capturing semantic meaning, it enhances sentiment analysis, document classification, and named entity recognition. Efficient and transferable, embeddings facilitate faster computation and enable machine learning models to better understand and process text. `BinarizeSentenceEmbedding` binarizes base embeddings and represents in bits.
 
    Example:
@@ -89,7 +105,7 @@ To get started with the Ozonetel AI project, follow the steps below:
         ```
         ```
         output:
-        
+
             query 0 vs doc 0 : similarity - 0.627
             query 0 vs doc 1 : similarity - 0.537
             query 1 vs doc 0 : similarity - 0.528
@@ -175,8 +191,8 @@ for i, doci in enumerate(topn_indices):
 | 4   | Banking 77 Classification                 | 81.07                                 | 75.89                                 | 81.93  | 82.06                  | 82.75                  |
 | 5   | Emotion Classification                    | 45.83                                 | 40.26                                 | 50.16  | 42.34                  | 42.4                   |
 | 6   | Imdb Classification                       | 64.57                                 | 61.14                                 | 87.84  | 85.06                  | 84.44                  |
-| 7   | Massive Intent Classification (en)        | -                                     | 65.6                                  | 71.08  | 68.9                   | 70.22                  |
-| 8   | Massive Scenario Classification (en)      | -                                     | 70.37                                 | 76.64  | 71.29                  | 72.68                  |
+| 7   | Massive Intent Classification (en)        | 69.32                                 | 65.6                                  | 71.08  | 68.9                   | 70.22                  |
+| 8   | Massive Scenario Classification (en)      | 75.35                                 | 70.37                                 | 76.64  | 71.29                  | 72.68                  |
 | 9   | MTOP Domain Classification (en)           | 89.24                                 | 87.22                                 | 93.36  | 87.56                  | 88.37                  |
 | 10  | MTOP Intent Classification (en)           | 68.69                                 | 69.45                                 | 66.58  | 74.11                  | 74.02                  |
 | 11  | Toxic Conversations Classification        | 71.02                                 | 70.26                                 | 72.6   | 68                     | 68.59                  |

@@ -25,7 +25,7 @@ class Embeddings(object):
         if response["is_error"] == 0:
             if "embedding" in response:
                 self.embedding = np.array(response["embedding"]).astype("uint8")
-                self.bits = np.unpackbits(self.embedding)
+                self.bits = np.unpackbits(self.embedding, axis=1)
             else:
                 raise AssertionError("could not embed!")
         else:

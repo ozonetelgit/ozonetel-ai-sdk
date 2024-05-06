@@ -12,6 +12,7 @@ changes:
 * About:
   - Added Simplified Bit Similarity option
   - Added examples for similairy computaion to README.md
+  - bug fix (BinarizedEmbeddings.bits and Embeddings.bits dimension corruption)
 
 * Expected Changes in behavior:
 * Reason of changes:
