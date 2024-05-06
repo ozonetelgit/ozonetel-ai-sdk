@@ -1,10 +1,28 @@
 **Changes**
 ============
 
-_version: 0.0.122_
+_version: 0.0.14_
 -----------------------
 ```
-version: 0.0.122
+version: 0.0.14
+dom: 6th May 2024
+issue:
+changes:
+```
+* About:
+  - Added Simplified Bit Similarity option
+  - Added examples for similairy computaion to README.md
+
+* Expected Changes in behavior:
+* Reason of changes:
+* Ref:
+* Optimisation details:
+
+
+_version: 0.0.13_
+-----------------------
+```
+version: 0.0.13
 dom: 2nd May 2024
 issue:
 changes:
@@ -18,7 +36,7 @@ changes:
 * Reason of changes:
 * Ref:
 * Optimisation details:
-* 
+
 _version: 0.0.12_
 -----------------------
 ```
