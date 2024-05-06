@@ -22,7 +22,7 @@ setup(
     version = version,
     author = "Biswajit Satapathy",
     author_email = "biswajit@ozonetel.com",
-    description = ("The Ozonetel AI Library is a powerful tool developed by Ozonetel Communications Pvt Ltd, designed to empower developers with state-of-the-art Artificial Intelligence capabilities. This library provides seamless integration of advanced AI models into your projects, allowing you to leverage the latest in AI technology to enhance your applications."),
+    description = ("The Ozonetel AI project is designed to provide a user-friendly interface for software development using Ozonetel's in-house AI libraries, models, and software solutions. It offers seamless integration with Ozonetel's advanced AI capabilities, allowing developers to harness the power of AI to enhance their applications."),
     license = ("MIT License"),
     keywords = "Machine Learning, Artificial Intellegence, Neural Network, Indexing, Searching",
     url = "",
